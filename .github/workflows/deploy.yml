@@ -88,7 +88,7 @@ jobs:
 
       - name: Run Lighthouse CI on deployed site
         run: |
-          lhci autorun --config=.lighthouserc.json --url=${{ needs.deploy.outputs.page_url }}
+          lhci autorun --config=.lighthouserc.json --url=https://srnarasim.github.io/dataprism-app-template/
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
         continue-on-error: true
@@ -102,7 +102,7 @@ jobs:
               repo: context.repo.repo,
               sha: context.sha,
               state: 'success',
-              target_url: '${{ needs.deploy.outputs.page_url }}',
+              target_url: 'https://srnarasim.github.io/dataprism-app-template/',
               description: 'Deployment successful',
               context: 'deployment/github-pages'
             });
