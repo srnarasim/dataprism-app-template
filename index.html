@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/dataprism-icon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="DataPrism App Template - WebAssembly-powered analytics in your browser" />
+    <meta name="keywords" content="dataprism, analytics, webassembly, data visualization, template" />
+    <meta name="author" content="DataPrism Team" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://github.com/srnarasim/dataprism-app-template" />
+    <meta property="og:title" content="DataPrism App Template" />
+    <meta property="og:description" content="Template for building high-performance analytics applications with DataPrism" />
+    <meta property="og:image" content="/dataprism-preview.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://github.com/srnarasim/dataprism-app-template" />
+    <meta property="twitter:title" content="DataPrism App Template" />
+    <meta property="twitter:description" content="Template for building high-performance analytics applications with DataPrism" />
+    <meta property="twitter:image" content="/dataprism-preview.png" />
+
+    <title>DataPrism App Template</title>
+    
+    <!-- Preconnect to CDN for better performance -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://unpkg.com" />
+    
+    <!-- Security headers -->
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src 'self' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com;
+      style-src 'self' 'unsafe-inline';
+      img-src 'self' data: https:;
+      font-src 'self' data:;
+      connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com;
+      worker-src 'self' blob:;
+      wasm-src 'self' https://cdn.jsdelivr.net https://unpkg.com blob:;
+    " />
+  </head>
+  <body>
+    <div id="root"></div>
+    
+    <!-- Loading fallback for slow connections -->
+    <noscript>
+      <div style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 2rem;
+        text-align: center;
+        font-family: system-ui, -apple-system, sans-serif;
+        background-color: #f9fafb;
+      ">
+        <div style="
+          max-width: 400px;
+          padding: 2rem;
+          background: white;
+          border-radius: 8px;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        ">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🚀</div>
+          <h1 style="margin: 0 0 1rem 0; color: #1f2937;">DataPrism App Template</h1>
+          <p style="margin: 0 0 1.5rem 0; color: #6b7280;">
+            JavaScript is required to run this application.
+          </p>
+          <p style="margin: 0; color: #9ca3af; font-size: 0.875rem;">
+            Please enable JavaScript in your browser to continue.
+          </p>
+        </div>
+      </div>
+    </noscript>
+    
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
