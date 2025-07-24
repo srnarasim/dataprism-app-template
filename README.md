@@ -61,18 +61,42 @@ Open [http://localhost:5173](http://localhost:5173) to see your app running! �
 
 ## 📊 Sample Data
 
-Try the template with these sample datasets:
+The template includes a sample CSV file (`public/sample-data.csv`) with 30 rows of realistic business data for testing:
 
-```csv
-name,age,salary,department
-Alice,25,50000,Engineering
-Bob,30,60000,Marketing  
-Carol,28,55000,Engineering
-David,35,75000,Sales
-Eve,22,45000,Marketing
-```
+### Dataset Overview
 
-Save as `sample-data.csv` and upload to see the template in action!
+- **Product Mix**: Electronics, Software, and Furniture items with realistic names
+- **Regional Data**: North America, Europe, and Asia regions
+- **Time Series**: Data spanning January-February 2024
+- **Business Metrics**: Revenue, quantity, ratings, and departmental analysis
+- **Sales Channels**: Online, Retail, and Direct Sales distribution
+
+### Fields Available
+
+| Field           | Type   | Description          | Example Values                                            |
+| --------------- | ------ | -------------------- | --------------------------------------------------------- |
+| `id`            | Number | Unique identifier    | 1, 2, 3...                                                |
+| `name`          | String | Product/service name | "Wireless Headphones", "CRM Software"                     |
+| `category`      | String | Item category        | Electronics, Software, Furniture                          |
+| `value`         | Number | Item price           | 29.99, 1599.99, 9999.99                                   |
+| `date`          | Date   | Transaction date     | 2024-01-15, 2024-02-08                                    |
+| `region`        | String | Geographic region    | North America, Europe, Asia                               |
+| `status`        | String | Current status       | Active, Inactive                                          |
+| `revenue`       | Number | Total revenue        | 12999.50, 99999.90                                        |
+| `quantity`      | Number | Units sold           | 5, 30, 100                                                |
+| `rating`        | Number | Customer rating      | 3.6 - 4.8                                                 |
+| `department`    | String | Business department  | Consumer Electronics, Business Software, Office Furniture |
+| `sales_channel` | String | Sales method         | Online, Retail, Direct Sales                              |
+
+### How to Use Sample Data
+
+1. **Download**: The file is available at `/sample-data.csv` when running the dev server
+2. **Upload**: Use the file upload interface to load the sample data
+3. **Analyze**: Try different visualizations:
+   - **Bar Charts**: Revenue by Region, Department Performance
+   - **Line Charts**: Rating Trends over Time, Revenue Timeline
+   - **Pie Charts**: Category Revenue Share, Sales Channel Distribution, Department Revenue Split
+   - **Perfect Pie Examples**: Use `category` + `revenue` or `sales_channel` + `revenue` for meaningful segments
 
 ## 🛠️ Development
 
@@ -131,16 +155,19 @@ npm run deploy           # Deploy to GitHub Pages
 The template includes comprehensive testing setup:
 
 ### Unit Tests (Vitest)
+
 ```bash
 npm run test
 ```
 
 ### E2E Tests (Playwright)
+
 ```bash
 npm run test:e2e
 ```
 
 ### Coverage Reports
+
 ```bash
 npm run test:coverage
 ```
@@ -152,9 +179,11 @@ This template is optimized for [Claude Code](https://docs.anthropic.com/en/docs/
 ### PRP Workflow
 
 1. **Generate Requirements**:
+
    ```bash
    /generate-prp
    ```
+
    Creates structured requirements for new features
 
 2. **Execute Implementation**:
@@ -166,6 +195,7 @@ This template is optimized for [Claude Code](https://docs.anthropic.com/en/docs/
 ### Context Engineering
 
 The template includes:
+
 - **CLAUDE.md**: Comprehensive context for the codebase
 - **Custom Commands**: `/generate-prp` and `/execute-prp` slash commands
 - **Settings**: Optimized Claude Code configuration
@@ -180,10 +210,10 @@ import { useDataPrism } from '@contexts/DataPrismContext';
 
 function MyComponent() {
   const { engine, isLoading, error } = useDataPrism();
-  
+
   if (isLoading) return <div>Loading DataPrism...</div>;
   if (error) return <div>Error: {error}</div>;
-  
+
   // Use engine for data processing
   const processData = async (data: any[]) => {
     return await engine.processData(data, {
@@ -265,8 +295,8 @@ export const appConfig = {
   supportedFormats: ['.csv', '.json', '.xlsx'],
   theme: {
     primary: '#0ea5e9',
-    secondary: '#38bdf8'
-  }
+    secondary: '#38bdf8',
+  },
 };
 ```
 
@@ -275,6 +305,7 @@ export const appConfig = {
 ### GitHub Pages (Recommended)
 
 1. **Configure Repository**:
+
    ```bash
    # Set up GitHub Pages in your repo settings
    # Choose "GitHub Actions" as the source
@@ -297,9 +328,11 @@ The included GitHub Actions workflow will automatically build and deploy your ap
 ## 📚 Examples & Use Cases
 
 ### Sales Dashboard
+
 See [`examples/sample-dashboard-prp.md`](./examples/sample-dashboard-prp.md) for a complete sales analytics dashboard implementation.
 
 ### Scientific Data Analysis
+
 ```typescript
 // Process scientific datasets
 const scientificData = await engine.processData(data, {
@@ -307,19 +340,20 @@ const scientificData = await engine.processData(data, {
   parameters: {
     analysis: 'correlation',
     variables: ['temperature', 'pressure'],
-    method: 'pearson'
-  }
+    method: 'pearson',
+  },
 });
 ```
 
 ### Financial Charts
+
 ```typescript
 // Create financial visualizations
 const financialChart = {
   type: 'candlestick',
   xField: 'date',
   yFields: ['open', 'high', 'low', 'close'],
-  title: 'Stock Price Movement'
+  title: 'Stock Price Movement',
 };
 ```
 
@@ -328,6 +362,7 @@ const financialChart = {
 ### Common Issues
 
 **DataPrism fails to load**
+
 ```bash
 # Check browser console for WASM errors
 # Ensure modern browser with WebAssembly support
@@ -335,6 +370,7 @@ const financialChart = {
 ```
 
 **File upload errors**
+
 ```bash
 # Check file size (default max: 10MB)
 # Verify file format (CSV, JSON, TXT supported)
@@ -342,6 +378,7 @@ const financialChart = {
 ```
 
 **Build failures**
+
 ```bash
 # Clear node_modules and reinstall
 rm -rf node_modules package-lock.json

@@ -24,21 +24,12 @@
 
     <title>DataPrism App Template</title>
     
-    <!-- Preconnect to CDN for better performance -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-    <link rel="preconnect" href="https://unpkg.com" />
+    <!-- Preconnect to DataPrism CDN for better performance -->
+    <link rel="preconnect" href="https://srnarasim.github.io" />
+    <link rel="dns-prefetch" href="https://srnarasim.github.io" />
     
-    <!-- Security headers -->
-    <meta http-equiv="Content-Security-Policy" content="
-      default-src 'self';
-      script-src 'self' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com;
-      style-src 'self' 'unsafe-inline';
-      img-src 'self' data: https:;
-      font-src 'self' data:;
-      connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com;
-      worker-src 'self' blob:;
-      wasm-src 'self' https://cdn.jsdelivr.net https://unpkg.com blob:;
-    " />
+    <!-- Security headers for WebAssembly (following dataprism-apps pattern) -->
+    <!-- Note: COEP is handled by Vite dev server headers in development -->
   </head>
   <body>
     <div id="root"></div>

@@ -4,6 +4,7 @@ import { ErrorBoundary } from '@components/common/ErrorBoundary';
 import { LoadingSpinner } from '@components/common/LoadingSpinner';
 import { FileUpload } from '@components/data/FileUpload';
 import { SimpleChart } from '@components/charts/SimpleChart';
+import { SampleDataDownload } from '@components/SampleDataDownload';
 import type { ParsedData } from '@types/dataprism';
 import type { ChartConfig } from '@types/app';
 
@@ -107,6 +108,8 @@ function AppContent() {
                 maxSize={10}
                 className="mb-4"
               />
+
+              <SampleDataDownload className="mb-4" />
 
               {uploadedData && (
                 <div className="mt-4 p-4 bg-gray-50 rounded-lg">

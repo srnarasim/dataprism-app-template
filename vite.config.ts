@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -19,11 +19,17 @@ export default defineConfig({
   server: {
     port: 3000,
     host: true,
-    headers: {
-      // Required for WebAssembly in development
-      'Cross-Origin-Embedder-Policy': 'require-corp',
-      'Cross-Origin-Opener-Policy': 'same-origin',
-    },
+    headers:
+      process.env.NODE_ENV === 'development'
+        ? {
+            // Disabled COEP for development to allow external CDN resources
+            'Cross-Origin-Opener-Policy': 'same-origin',
+          }
+        : {
+            // Production headers for WebAssembly
+            'Cross-Origin-Embedder-Policy': 'require-corp',
+            'Cross-Origin-Opener-Policy': 'same-origin',
+          },
   },
   build: {
     target: 'esnext',
@@ -40,6 +46,9 @@ export default defineConfig({
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
   },
+
+  // WebAssembly support (required for DataPrism)
+  assetsInclude: ['**/*.wasm'],
   test: {
     globals: true,
     environment: 'jsdom',
@@ -66,4 +75,4 @@ export default defineConfig({
       },
     },
   },
-})
+});
