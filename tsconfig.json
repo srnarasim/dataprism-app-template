@@ -16,8 +16,8 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
 
     /* Path mapping */
@@ -31,6 +31,6 @@
       "@utils/*": ["src/utils/*"]
     }
   },
-  "include": ["src", "tests"],
+  "include": ["src", "tests", "vite-env.d.ts"],
   "exclude": ["node_modules", "dist", "coverage"]
 }

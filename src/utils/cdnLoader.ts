@@ -3,7 +3,8 @@
  * Handles loading DataPrism engine from CDN with fallback options
  */
 
-const DEFAULT_CDN_URL = 'https://cdn.jsdelivr.net/npm/@dataprism/core@latest/dist/dataprism-core.js';
+const DEFAULT_CDN_URL =
+  'https://cdn.jsdelivr.net/npm/@dataprism/core@latest/dist/dataprism-core.js';
 const FALLBACK_CDN_URLS = [
   'https://unpkg.com/@dataprism/core@latest/dist/dataprism-core.js',
   'https://cdn.skypack.dev/@dataprism/core@latest',
@@ -35,11 +36,7 @@ export async function loadDataPrismFromCDN(
   cdnUrl?: string,
   options: LoaderOptions = {}
 ): Promise<void> {
-  const {
-    timeout = 10000,
-    retries = 3,
-    enableFallbacks = true,
-  } = options;
+  const { timeout = 10000, enableFallbacks = true } = options;
 
   // Return immediately if already loaded
   if (loaderState.isLoaded) {
@@ -56,32 +53,30 @@ export async function loadDataPrismFromCDN(
   const startTime = Date.now();
 
   try {
-    const urlsToTry = [
-      cdnUrl || DEFAULT_CDN_URL,
-      ...(enableFallbacks ? FALLBACK_CDN_URLS : []),
-    ];
+    const urlsToTry = [cdnUrl || DEFAULT_CDN_URL, ...(enableFallbacks ? FALLBACK_CDN_URLS : [])];
 
     let lastError: Error | null = null;
 
     for (const url of urlsToTry) {
       try {
         await loadScriptWithTimeout(url, timeout);
-        
+
         // Verify DataPrism is available
         if (typeof window !== 'undefined' && (window as any).DataPrism) {
           loaderState.isLoaded = true;
           loaderState.loadTime = Date.now() - startTime;
+          // eslint-disable-next-line no-console
           console.log(`DataPrism loaded successfully from ${url} in ${loaderState.loadTime}ms`);
           return;
         }
       } catch (error) {
         lastError = error instanceof Error ? error : new Error(`Failed to load from ${url}`);
+        // eslint-disable-next-line no-console
         console.warn(`Failed to load DataPrism from ${url}:`, lastError.message);
       }
     }
 
     throw lastError || new Error('All CDN URLs failed');
-
   } catch (error) {
     loaderState.error = error instanceof Error ? error.message : 'Unknown error';
     throw new Error(`Failed to load DataPrism: ${loaderState.error}`);

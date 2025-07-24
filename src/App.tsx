@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { DataPrismProvider, useDataPrism } from '@contexts/DataPrismContext';
 import { ErrorBoundary } from '@components/common/ErrorBoundary';
 import { LoadingSpinner } from '@components/common/LoadingSpinner';
 import { FileUpload } from '@components/data/FileUpload';
 import { SimpleChart } from '@components/charts/SimpleChart';
-import { ParsedData } from '@types/dataprism';
-import { ChartConfig } from '@types/app';
+import type { ParsedData } from '@types/dataprism';
+import type { ChartConfig } from '@types/app';
 
 function AppContent() {
-  const { engine, isLoading, error, isInitialized } = useDataPrism();
+  const { isLoading, error, isInitialized } = useDataPrism();
   const [uploadedData, setUploadedData] = useState<ParsedData | null>(null);
   const [chartConfig, setChartConfig] = useState<ChartConfig>({
     id: 'default-chart',
@@ -20,7 +20,7 @@ function AppContent() {
 
   const handleFileUpload = (data: ParsedData) => {
     setUploadedData(data);
-    
+
     // Auto-configure chart with first two columns
     if (data.columns.length >= 2) {
       setChartConfig(prev => ({
@@ -39,10 +39,7 @@ function AppContent() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <LoadingSpinner 
-          size="lg" 
-          message="Initializing DataPrism engine..." 
-        />
+        <LoadingSpinner size="lg" message="Initializing DataPrism engine..." />
       </div>
     );
   }
@@ -53,9 +50,7 @@ function AppContent() {
         <div className="max-w-md w-full bg-red-50 border border-red-200 rounded-lg p-6">
           <div className="text-center">
             <div className="text-red-500 text-4xl mb-4">⚠️</div>
-            <h2 className="text-xl font-semibold text-red-800 mb-2">
-              DataPrism Error
-            </h2>
+            <h2 className="text-xl font-semibold text-red-800 mb-2">DataPrism Error</h2>
             <p className="text-red-700 mb-4">{error}</p>
             <button
               onClick={() => window.location.reload()}
@@ -78,21 +73,19 @@ function AppContent() {
             <div className="flex items-center">
               <div className="text-2xl mr-3">🚀</div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">
-                  DataPrism App Template
-                </h1>
+                <h1 className="text-2xl font-bold text-gray-900">DataPrism App Template</h1>
                 <p className="text-sm text-gray-600">
                   WebAssembly-powered analytics in your browser
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-2">
-              <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-                isInitialized 
-                  ? 'bg-green-100 text-green-800' 
-                  : 'bg-yellow-100 text-yellow-800'
-              }`}>
+              <div
+                className={`px-2 py-1 rounded-full text-xs font-medium ${
+                  isInitialized ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                }`}
+              >
                 {isInitialized ? '✓ Ready' : 'Initializing...'}
               </div>
             </div>
@@ -106,10 +99,8 @@ function AppContent() {
           {/* Data Upload Section */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                📊 Data Upload
-              </h2>
-              
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">📊 Data Upload</h2>
+
               <FileUpload
                 onFileUpload={handleFileUpload}
                 acceptedTypes={['.csv', '.json', '.txt']}
@@ -119,9 +110,7 @@ function AppContent() {
 
               {uploadedData && (
                 <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                  <h3 className="font-medium text-gray-900 mb-2">
-                    Data Summary
-                  </h3>
+                  <h3 className="font-medium text-gray-900 mb-2">Data Summary</h3>
                   <div className="text-sm text-gray-600 space-y-1">
                     <div>Rows: {uploadedData.summary.rowCount.toLocaleString()}</div>
                     <div>Columns: {uploadedData.summary.columnCount}</div>
@@ -135,10 +124,8 @@ function AppContent() {
             {/* Chart Configuration */}
             {uploadedData && (
               <div className="mt-6 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                  ⚙️ Chart Settings
-                </h2>
-                
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">⚙️ Chart Settings</h2>
+
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -146,7 +133,7 @@ function AppContent() {
                     </label>
                     <select
                       value={chartConfig.type}
-                      onChange={(e) => handleChartConfigChange('type', e.target.value as any)}
+                      onChange={e => handleChartConfigChange('type', e.target.value as any)}
                       className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
                     >
                       <option value="bar">Bar Chart</option>
@@ -161,7 +148,7 @@ function AppContent() {
                     </label>
                     <select
                       value={chartConfig.xField}
-                      onChange={(e) => handleChartConfigChange('xField', e.target.value)}
+                      onChange={e => handleChartConfigChange('xField', e.target.value)}
                       className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
                     >
                       <option value="">Select field...</option>
@@ -179,7 +166,7 @@ function AppContent() {
                     </label>
                     <select
                       value={chartConfig.yField}
-                      onChange={(e) => handleChartConfigChange('yField', e.target.value)}
+                      onChange={e => handleChartConfigChange('yField', e.target.value)}
                       className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
                     >
                       <option value="">Select field...</option>
@@ -198,7 +185,7 @@ function AppContent() {
                     <input
                       type="text"
                       value={chartConfig.title}
-                      onChange={(e) => handleChartConfigChange('title', e.target.value)}
+                      onChange={e => handleChartConfigChange('title', e.target.value)}
                       className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
                       placeholder="Enter chart title..."
                     />
@@ -211,16 +198,10 @@ function AppContent() {
           {/* Visualization Section */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-6">
-                📈 Visualization
-              </h2>
-              
+              <h2 className="text-lg font-semibold text-gray-900 mb-6">📈 Visualization</h2>
+
               {uploadedData && chartConfig.xField && chartConfig.yField ? (
-                <SimpleChart
-                  data={uploadedData.data}
-                  config={chartConfig}
-                  className="h-96"
-                />
+                <SimpleChart data={uploadedData.data} config={chartConfig} className="h-96" />
               ) : (
                 <div className="h-96 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg">
                   <div className="text-center">
@@ -239,10 +220,8 @@ function AppContent() {
             {/* Data Preview */}
             {uploadedData && (
               <div className="mt-6 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                  🔍 Data Preview
-                </h3>
-                
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">🔍 Data Preview</h3>
+
                 <div className="overflow-x-auto">
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
@@ -274,7 +253,7 @@ function AppContent() {
                     </tbody>
                   </table>
                 </div>
-                
+
                 {uploadedData.data.length > 5 && (
                   <p className="mt-3 text-sm text-gray-500 text-center">
                     Showing 5 of {uploadedData.data.length.toLocaleString()} rows
@@ -292,8 +271,8 @@ function AppContent() {
           <div className="text-center text-sm text-gray-500">
             <p>
               Built with ❤️ using{' '}
-              <a 
-                href="https://github.com/srnarasim/dataprism-core" 
+              <a
+                href="https://github.com/srnarasim/dataprism-core"
                 className="text-dataprism-600 hover:text-dataprism-700"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -301,8 +280,8 @@ function AppContent() {
                 DataPrism
               </a>
               {' • '}
-              <a 
-                href="https://github.com/srnarasim/dataprism-app-template" 
+              <a
+                href="https://github.com/srnarasim/dataprism-app-template"
                 className="text-dataprism-600 hover:text-dataprism-700"
                 target="_blank"
                 rel="noopener noreferrer"

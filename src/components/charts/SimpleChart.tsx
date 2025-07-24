@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDataPrism } from '@contexts/DataPrismContext';
-import { ChartConfig } from '@types/app';
+import type { ChartConfig } from '@types/app';
 import { LoadingSpinner } from '@components/common/LoadingSpinner';
 
 interface SimpleChartProps {
@@ -9,11 +9,7 @@ interface SimpleChartProps {
   className?: string;
 }
 
-export const SimpleChart: React.FC<SimpleChartProps> = ({
-  data,
-  config,
-  className = '',
-}) => {
+export const SimpleChart: React.FC<SimpleChartProps> = ({ data, config, className = '' }) => {
   const { engine } = useDataPrism();
   const [chartData, setChartData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -31,7 +27,7 @@ export const SimpleChart: React.FC<SimpleChartProps> = ({
 
       try {
         // Use DataPrism engine to process data for visualization
-        const processed = await engine.processData(data, {
+        const processed = await engine!.processData(data, {
           type: 'visualization',
           parameters: {
             chartType: config.type,
@@ -89,15 +85,11 @@ export const SimpleChart: React.FC<SimpleChartProps> = ({
   return (
     <div className={`bg-white border border-gray-200 rounded-lg p-4 ${className}`}>
       {config.title && (
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">
-          {config.title}
-        </h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">{config.title}</h3>
       )}
-      
-      <div className="chart-container">
-        {renderChart(config.type, chartData, config)}
-      </div>
-      
+
+      <div className="chart-container">{renderChart(config.type, chartData, config)}</div>
+
       <div className="mt-4 text-xs text-gray-500 text-center">
         {data.length} records • Processed by DataPrism
       </div>
@@ -108,7 +100,7 @@ export const SimpleChart: React.FC<SimpleChartProps> = ({
 // Simple chart rendering functions (mock implementation)
 function renderChart(type: string, data: any, config: ChartConfig) {
   const mockData = data.processedData || [];
-  
+
   switch (type) {
     case 'bar':
       return <BarChart data={mockData} config={config} />;
@@ -125,26 +117,22 @@ function renderChart(type: string, data: any, config: ChartConfig) {
 const BarChart: React.FC<{ data: any[]; config: ChartConfig }> = ({ data, config }) => {
   const values = data.map(item => Number(item[config.yField]) || 0);
   const maxValue = Math.max(...values);
-  
+
   return (
     <div className="space-y-2">
       {data.slice(0, 10).map((item, index) => {
         const value = Number(item[config.yField]) || 0;
         const percentage = maxValue > 0 ? (value / maxValue) * 100 : 0;
-        
+
         return (
           <div key={index} className="flex items-center gap-2">
-            <div className="w-20 text-sm text-gray-600 truncate">
-              {item[config.xField]}
-            </div>
+            <div className="w-20 text-sm text-gray-600 truncate">{item[config.xField]}</div>
             <div className="flex-1 bg-gray-200 rounded-full h-6">
               <div
                 className="bg-dataprism-500 h-6 rounded-full flex items-center justify-end pr-2"
                 style={{ width: `${percentage}%` }}
               >
-                <span className="text-xs text-white font-medium">
-                  {value}
-                </span>
+                <span className="text-xs text-white font-medium">{value}</span>
               </div>
             </div>
           </div>
